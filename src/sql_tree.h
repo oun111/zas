@@ -156,6 +156,8 @@ namespace stree_types {
     s_unique_index,/* keyword 'unique index' */
     s_foreign_key,/* keyword 'foreign key' */
     s_comment, /* keyword 'comment' */
+    s_cascade, /* keyword 'cascade' */
+    s_restrict, /* keyword 'restrict' */
   } ;
   enum endp_type { 
     s_tbl, s_schema, s_func, 
@@ -371,6 +373,8 @@ namespace stree_types {
    sget(t)==s_unique_index?"unique":  \
    sget(t)==s_foreign_key?"foreign key":\
    sget(t)==s_comment?"comment":      \
+   sget(t)==s_cascade?"cascade":      \
+   sget(t)==s_restrict?"restrict":    \
    "attr type n/a"):                  \
   mget(t)==m_cdt?                     \
    (sget(t)==cda_col?"col name":      \
@@ -455,6 +459,8 @@ public:
    &sql_tree::parse_sl_keys:           \
     (t)==s_ob?                         \
    &sql_tree::parse_ob_keys:           \
+   (t)==s_dTbl_lst?     \
+   &sql_tree::parse_dtbl_keys:         \
    NULL                                \
 )
 
@@ -646,6 +652,8 @@ private:
   /* syntax processing on 'create xxx' statement */
   int parse_create_tbl_additions(stxNode*,int&);
   int parse_create_stmt(stxNode*,int &);
+  /* parse keywrods in 'drop table' list */
+  stxNode* parse_dtbl_keys(char*,int&);
   /* syntax processing on 'drop xxx' statement */
   int parse_drop_stmt(stxNode*,int&);
 } ;

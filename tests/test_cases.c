@@ -198,7 +198,7 @@ int main(int argc, char *argv[])
           //",primary key(c1)"
           ") engine = innodb default charset=utf8");
         streams[strs].debug();
-        streams[strs].open(0, "drop table if exists t1,t2,t3 ");
+        streams[strs].open(0, "drop table if exists t1,t2,t3 cascade");
         streams[strs].debug();
         return 0;
       }

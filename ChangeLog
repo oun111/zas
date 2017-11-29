@@ -1,4 +1,7 @@
 Changes:
+  Nov 29,2017:
+    1. add 'cascade'/'restrict' keywords support in 'drop table' statements
+
   Nov 28,2017:
     1. add 'drop table' syntax support
 

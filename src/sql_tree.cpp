@@ -1713,6 +1713,25 @@ stxNode* sql_tree::parse_ob_keys(
   return create_node(NULL,m_keyw,st);
 }
 
+/* parse keyword in 'drop table' list */
+stxNode* sql_tree::parse_dtbl_keys(
+  char *tkn, int &p)
+{
+  int st = s_none; 
+
+  if (!strcasecmp(tkn,"cascade")) {
+    st = s_cascade ;
+    mov(p,tkn);
+  } else if (!strcasecmp(tkn,"restrict")) {
+    st = s_restrict ;
+    mov(p,tkn);
+  } else {
+    //printd("unknown keyword '%s' in 'order by' stmt\n", tkn);
+    return NULL ;
+  }
+  return create_node(NULL,m_keyw,st);
+}
+
 /* parse keyword in 'select' list */
 stxNode* sql_tree::parse_sl_keys(
   char *tkn, int &p)
@@ -3103,9 +3122,10 @@ int tree_serializer::add_comma(
   /* get the current/next list item */
   p  = node->op_lst[pos];
   nxt= node->op_lst[pos+1];
-  /* 'order by' list */
-  if (is_type_equals(node->type,m_list,s_ob)) {
-    /* for order by list, add commas before 
+  /* 'order by'/'drop table' list */
+  if (is_type_equals(node->type,m_list,s_ob) || 
+     is_type_equals(node->type,m_list,s_dTbl_lst)) {
+    /* for these lists, add commas before 
      *  items that are NOT keywords */
     if (mget(nxt->type)!=m_keyw) 
       s += ",";
