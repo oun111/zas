@@ -94,8 +94,12 @@ int sql_tree::parse_create_stmt(stxNode *parent, int &p)
        *  like 'engine', character, etc */
       parse_create_tbl_additions(parent,p);
 
-    } else if (!strcasecmp(buf,"select")) {
-      /* TODO: create table with 'select' */
+    } 
+    /* create table with 'select' */
+    else if (!strcasecmp(buf,"select")) {
+      stxNode *nd = parse_stmt(p);
+
+      attach(parent,nd);
     }
 
   }
