@@ -15,6 +15,7 @@ LDFLAG          := -Wall -g -pthread -lrt -L. -l$(MODULE) -ldl #.$(MOD_VER)
 CFLAG_OBJS      := -Wall -Werror -I. -g -UDBG_LOG -UDB_RECONN -fPIC
 TARGET_LIB      := lib$(MODULE).a
 TARGET_SO       := lib$(MODULE).$(MOD_VER).so
+TARGET_SO_LNK   := lib$(MODULE).so
 
 CFLAG_OBJS      += -D__LAZY_EXEC__ 
 
@@ -30,6 +31,7 @@ $(TARGET_SO):$(OBJS)
 	# generate dynamic lib 
 	#
 	$(CPP) $(OBJS) -shared -o $@
+	ln -sf $@ $(TARGET_SO_LNK)
 
 .PHONY: all
 all: $(TARGET_LIB) $(TARGET_SO) 
@@ -42,7 +44,7 @@ $(C_OBJS):%.o:%.c
 
 .PHONY: clean
 clean:
-	rm -f $(OBJS) *.so $(TARGET_LIB) $(TARGET_SO)
+	rm -f $(OBJS) *.so $(TARGET_LIB) $(TARGET_SO) $(TARGET_SO_LNK)
 
 .PHONY: distclean
 distclean:clean

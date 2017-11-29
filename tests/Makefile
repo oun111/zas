@@ -14,7 +14,6 @@ CFLAG_OBJS      := -Wall -Werror -I. -g  -fPIC -I$(LIB_PATH)/DAL/mysql  \
 LDFLAG        +=  -lz -lcrypto
 
 TARGET          := test 
-TARGET_LIB      := $(LIB_PATH)/lib$(MODULE).a
 
 .PHONY: all
 all:  $(TARGET) 
