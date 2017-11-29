@@ -3,7 +3,7 @@
 #include "dbug.h"
 #include "sql_checker.h"
 
-using namespace stree_types;
+using namespace STREE_TYPES;
 
 /*
  * class sql_checker

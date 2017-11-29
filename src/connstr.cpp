@@ -74,8 +74,6 @@ namespace LEX_GLOBAL {
   }
 } ;
 
-using namespace LEX_GLOBAL ;
-
 /* 
  * class tns_parser
  */

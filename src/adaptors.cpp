@@ -6,7 +6,7 @@
 #include "attrib_list.h"
 #include "dbug.h"
 
-using namespace stree_types;
+using namespace STREE_TYPES;
 
 /* 
  * class mysql_adpt

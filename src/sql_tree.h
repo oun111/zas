@@ -16,7 +16,7 @@ using stxNode = struct SyntaxTreeNode ;
 using p_stxNode = struct SyntaxTreeNode** ;
 
 
-namespace stree_types {
+namespace STREE_TYPES {
   /* type main/sub bits read/write operations */
 #define mget(t)     (((uint32_t)t>>10)&0x3ff)
 #define sget(t)     (((uint32_t)t)&0x3ff)
@@ -468,7 +468,7 @@ private:
   /* the target sql statement */
   std::string sql_stmt ;
   /* priority definition of operators */
-  uint16_t prio_lst[stree_types::expr_max];
+  uint16_t prio_lst[STREE_TYPES::expr_max];
   /* the option flag that passed over
    *  function call chains */
   tOptFlag fc_flag ;

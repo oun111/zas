@@ -12,11 +12,11 @@
   #include "win/win.h"
 #endif
 
+
 /* max length of a token */
 const int TKNLEN = /*64*/68;
 const int PWDLEN = 256;
 const int LONG_DATABUF_LEN =/*128*/4096;
-
 
 
 namespace LEX_GLOBAL {
