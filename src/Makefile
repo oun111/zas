@@ -14,7 +14,7 @@ MOD_VER         := $(shell grep -i "__mod_ver__" ./$(MODULE).h|awk '{print $$3}'
 LDFLAG          := -Wall -g -pthread -lrt -L. -l$(MODULE) -ldl #.$(MOD_VER) 
 CFLAG_OBJS      := -Wall -Werror -I. -g -UDBG_LOG -UDB_RECONN -fPIC
 TARGET_LIB      := lib$(MODULE).a
-TARGET_SO       := lib$(MODULE).$(MOD_VER).so
+TARGET_SO       := lib$(MODULE).so.$(MOD_VER)
 TARGET_SO_LNK   := lib$(MODULE).so
 
 CFLAG_OBJS      += -D__LAZY_EXEC__ 
