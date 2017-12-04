@@ -932,6 +932,11 @@ int mysql_adpt::adpt_normal_list(stxNode *node, int pos)
      p->type==mktype(m_list,s_sel)) {
     return 0;
   }
+  /* sub query under list */
+  if (m_list==mget(node->parent->type) && 
+     node->op_lst[0]->type==mktype(m_stmt,s_select)) {
+    return 0;
+  }
   /* detach from top node */
   p->op_lst.erase(p->op_lst.begin()+pos);
   for (i=0;i<node->op_lst.size();i++) {

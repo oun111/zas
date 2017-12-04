@@ -4,6 +4,10 @@ Changes:
     
         'insert into <table> [format list] <val list a>, <val list b> ... '
 
+    2. add support for sub queries in 'update' statements like the following:
+
+        'update <table a>, (sub query b), ... set ... where ...'
+
   Nov 29,2017:
     1. add 'cascade'/'restrict' keywords support in 'drop table' statements
 
