@@ -1,4 +1,9 @@
 Changes:
+  Dec 4, 2017:
+    1. add support for multiple value list items syntax like : 
+    
+        'insert into <table> [format list] <val list a>, <val list b> ... '
+
   Nov 29,2017:
     1. add 'cascade'/'restrict' keywords support in 'drop table' statements
 
