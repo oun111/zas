@@ -184,24 +184,9 @@ int main(int argc, char *argv[])
 
     printd("<<< test zas streaming : \n");
     try {
-#if 1
+#if 0
       {
         printd("test 0\n");
-        cnn.change_db("test_db");
-        streams[strs].open(0, "create table if not exists t1("
-          "c1 int not null primary key auto_increment, "
-          "c2 varchar(10) null default 0,"
-          "index i3(c2),"
-          "unique index i4(c1),"
-          "c3 bigint default 0,"
-          "foreign key i5(c1) references test_tbl(id)"
-          //",primary key(c1)"
-          ") engine = innodb default charset=utf8");
-        streams[strs].debug();
-        streams[strs].open(0, "create table if not exists t2 select *from t1");
-        streams[strs].debug();
-        streams[strs].open(0, "drop table if exists t1,t2,t3 cascade");
-        streams[strs].debug();
         return 0;
       }
 #endif
@@ -501,6 +486,18 @@ int main(int argc, char *argv[])
       streams[strs].open(0, "insert into test_db.test_tbl(name,price,size) "
         "values select name :#<char>,price,size from test_db.test_tbl where name "
         "like :f1<char[10]> on duplicate key update size=1;");
+      streams[strs].open(0,"insert test_tbl "
+        "values(20000,'a',1.1,12),(20001,'b',22.0,9)"
+      );
+      streams[strs].debug();
+      streams[strs].open(0,"insert into test_tbl (name,price,size) "
+        "values('a',1.1,12),('b',22.0,9),('c',2.13,998),('d',0.3,7)"
+      );
+      streams[strs].debug();
+      streams[strs].open(0, "insert into test_db.test_tbl(name,price,size) "
+        "select name :#<char>,price,size from test_db.test_tbl where name "
+        "like :f1<char[10]> on duplicate key update size=1;");
+      streams[strs].debug();
     }
     {
       //char buf[128];
@@ -651,6 +648,21 @@ int main(int argc, char *argv[])
         "union "
         "select id, name from (select *from (select *from test_db.test_tbl_1)) "
         );
+        cnn.change_db("test_db");
+        streams[strs].open(0, "create table if not exists t1("
+          "c1 int not null primary key auto_increment, "
+          "c2 varchar(10) null default 0,"
+          "index i3(c2),"
+          "unique index i4(c1),"
+          "c3 bigint default 0,"
+          "foreign key i5(c1) references test_tbl(id)"
+          //",primary key(c1)"
+          ") engine = innodb default charset=utf8");
+        streams[strs].debug();
+        streams[strs].open(0, "create table if not exists t2 select *from t1");
+        streams[strs].debug();
+        streams[strs].open(0, "drop table if exists t1,t2,t3 cascade");
+        streams[strs].debug();
     }
     {
       printd("test 20\n");

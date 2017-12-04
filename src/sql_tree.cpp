@@ -2093,129 +2093,82 @@ int sql_tree::parse_odku_stmt(stxNode *parent, int &p)
 
 int sql_tree::parse_insert_stmt(stxNode *parent, int &p)
 {
-/* remove 'values' keyword from 'value list' */
-#if 0
-#define RM_VAL(prt) do {\
-  int n = prt->op_lst.size()-1;\
-  stxNode *vn = prt->op_lst[n] ;\
-  if (vn->type==mktype(m_list,s_val)) {\
-    /* there're stuffs under 'values' */ \
-    if (vn->op_lst.size()>0) {\
-      stxNode *node = vn->op_lst[0];\
-      if (mget(node->type) == m_stmt) { \
-        vn->op_lst.erase(\
-          vn->op_lst.begin());\
-        detach(vn,n);\
-        attach(prt,node); \
-      }  \
-    } else { \
-      detach(vn,n);\
-    } \
-  }\
-} while(0) 
-#else
-  auto RM_VAL = [&](auto &prt) {
-
-    int n = prt->op_lst.size()-1;
-    stxNode *vn = prt->op_lst[n] ;
-
-    if (vn->type==mktype(m_list,s_val)) {
-      /* there're stuffs under 'values' */ 
-      if (vn->op_lst.size()>0) {
-        stxNode *node = vn->op_lst[0];
-
-        if (mget(node->type) == m_stmt) {
-          vn->op_lst.erase(
-            vn->op_lst.begin());
-          detach(vn,n);
-          attach(prt,node);
-        }
-      } else {
-        detach(vn,n);
-      }
-    }
-  } ;
-#endif
   char buf[TKNLEN] = "" ;
   std::string &s = sql_stmt ;
   stxNode *node = 0;
-  int st = 0;
 
   /* skip the 'into' keyword */
   p = next_token(s,p,buf);
-  /* XXX: this 'if' block is used to ignore the 'insert'
-   *  target processing in 'insert' part of 'merge into' 
-   *  statement, and to process those in normal 'insert' 
-   *  statements */
   if (!strcasecmp(buf,"into")) {
     mov(p,buf);
-    /* get 'insert' target */
+  }
+
+  p = next_token(s,p,buf);
+  /* parse 'insert' target table's name */
+  if (*buf!='(') {
     fset(of_ci,ci_all&~ci_func);
     node = parse_endpoint_item(p);
+    attach(parent,node);
     fclr(of_ci);
-    attach(parent,node);
-    p = next_token(s,p,buf);
-    /* test if there's alias behind target name */
-    if (*buf!='(' && 
-       strcasecmp(buf,"values") &&
-       strcasecmp(buf,"select")) {
-      /* get the alias if exists */
-      node = parse_alias(p);
-      attach(parent,node);
-      p = next_token(s,p,buf);
-    }
   }
-  /* parse the first list, assume to be 
-   *  the 'format' list */
-  if (strcasecmp(buf,"values")) {
-    //fset(of_nt,s_fmt);
-    node = parse_complex_item(p);
-    attach(parent,node);
-    //fclr(of_nt);
-    /* assume to be 'format' list if 
-     *  '(' exists */
-    if (*buf=='(')
-      sset(node->type,s_fmt);
-  }
-  /* skip the 'values' keyword */
+
   p = next_token(s,p,buf);
-  if (!strcasecmp(buf,"values")) {
+  /* test if there's alias behind target name */
+  if (*buf!='(' && 
+     strcasecmp(buf,"values") &&
+     strcasecmp(buf,"select")) {
+    /* get the alias if exists */
+    node = parse_alias(p);
+    attach(parent,node);
+  }
+
+  /* parse the 'format' list */
+  p = next_token(s,p,buf);
+  if (*buf=='(') {
+    /* skip '(' */
+    mov(p,buf);
+    /*node = parse_complex_item(p);
+    attach(parent,node);*/
+    parse_list(parent,s_fmt,p);
+    /* skip ')' */
+    p = next_token(s,p,buf);
     mov(p,buf);
   }
-  /* test ending of statement, the statement's
-   *   structure is:
-   *  insert <tbl> <value list>*/
-  if (p>=(int)s.size()) {
-    st = parent->op_lst.size()-1;
-    /* change 'format' list type to 'value' type */
-    if (is_type_equals(parent->op_lst[st]->type,
-       m_list,s_fmt)) {
-      mset(parent->op_lst[st]->type,m_list);
-      sset(parent->op_lst[st]->type,s_val);
-    }
-    /* remove 'values' before subqueries in
-     *  'value list' */
-    RM_VAL(parent);
-    return 1;
-  }
-  /* try if it's the 'on duplicate key update' list */
-  parse_odku_stmt(parent,p);
-  /* otherwise, the structure is: 
-   *  insert <tbl> <format list> <value list> 
-   * then parse the 'value' list */
-  //fset(of_nt,s_val);
-  parse_list(parent,s_val,p);
-  //fclr(of_nt);
-  /* remove 'values' before subqueries in
-   *  'value list' */
-  RM_VAL(parent);
-  /* XXX: parse the possible 'where' list, for
-   *  'insert' part of 'merge into' statements only */
+
+  /* parse the 'values' list */
   p = next_token(s,p,buf);
-  if (!strcasecmp(buf,"where")) {
-    parse_where_list(parent,p);
-    return 1;
+  if (!strcasecmp(buf,"values")) {
+    /* skip */
+    mov(p,buf);
+
+    /* test if it's sub query */
+    p = next_token(s,p,buf);
+    if (!strcasecmp(buf,"select")) {
+      goto __parse_sub;
+    }
+
+    /* parse the normal value list */
+    parse_list(parent,s_val,p);
+
+    /* for multiple value lists , change 
+     *   their types: normal -> value list items */
+    node = find_in_tree(parent,mktype(m_list,s_val));
+    if (node && node->op_lst.size()>1) {
+      for (auto i : node->op_lst) {
+        if (i->type==mktype(m_list,s_norm)) 
+          i->type = mktype(m_list,s_val_sub);
+      }
+
+    }
   }
+
+__parse_sub:
+  /* parse sub query */
+  if (!strcasecmp(buf,"select")) {
+    node = parse_stmt(p);
+    attach(parent,node);
+  }
+
   /* try if it's the 'on duplicate key update' list */
   parse_odku_stmt(parent,p);
   return 1;
@@ -2439,6 +2392,13 @@ int sql_tree::parse_mergeinto_stmt(stxNode *parent, int &p)
       /* parse the 'insert...' items behind as 
        *  'insert' statement */
       parse_insert_stmt(nd,p);
+      /* parse the possible 'where' list, for
+       *  'insert' part of 'merge into' statements only */
+      p = next_token(s,p,buf);
+      if (!strcasecmp(buf,"where")) {
+        parse_where_list(nd,p);
+      }
+
     }
   }
   return 1;
@@ -3253,6 +3213,8 @@ int tree_serializer::serialize_tree(stxNode *node)
     /* list type */
     case m_list:
       switch (sget(node->type)) {
+        /* value list items */
+        case s_val_sub:
         /* index list */
         case s_index:
         /* create table: column definition list */
@@ -3316,6 +3278,16 @@ int tree_serializer::serialize_tree(stxNode *node)
           break ;
         /* 'value' list of insert */
         case s_val:
+          s += sub_type_str(node->type);
+          s += " ";
+          /* don't add () pair while there value list items in it */
+          if (node->op_lst[0]->type!=mktype(m_list,s_val_sub)) {
+            /* add '()' pair */
+            bBckPair = true ;
+          }
+          /* do commas adding */
+          lp = &tree_serializer::add_comma;
+          break ;
         /* 'for update of' list */
         case s_fuoc:
           s += sub_type_str(node->type);

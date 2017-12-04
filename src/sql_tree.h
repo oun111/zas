@@ -173,6 +173,7 @@ namespace STREE_TYPES {
     s_set,  /* set list in 'update' statement */
     s_fmt,  /* format list in 'insert' */
     s_val,  /* value list in 'insert' */
+    s_val_sub,  /* value list items in 'insert' */
     s_arg,  /* function argument list */
     s_on,   /* left/right join ... on ... */
     s_ob,   /* order by */
@@ -309,6 +310,7 @@ namespace STREE_TYPES {
    sget(t)==s_set?"set":              \
    sget(t)==s_fmt?"format list":      \
    sget(t)==s_val?"values":           \
+   sget(t)==s_val_sub?"values sub":   \
    sget(t)==s_arg?"argument list":    \
    sget(t)==s_on?"on":                \
    sget(t)==s_ob?"order by":          \

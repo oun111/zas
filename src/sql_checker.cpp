@@ -41,6 +41,7 @@ sql_checker::~sql_checker(void)
 inline int sql_checker::check_stmt_list(stxNode *node)
 {
   uint16_t i=0;
+  size_t num_a = 0;
 
   if (mget(node->type)!=m_list) {
     return 1;
@@ -83,27 +84,44 @@ inline int sql_checker::check_stmt_list(stxNode *node)
     stxNode *nd = find_in_tree(node->parent,
       mktype(m_list,s_val));
     /* alias number */
-    size_t num_a = 0;
     if (!nd) {
-      /* try if value list has a select statement */
+      /* try if value list has a sub select */
       nd = find_in_tree(node->parent,mktype(m_list,s_sel));
-      if (!nd)
-        return 1;
-      /* sumerise alias count in select list */
-      for (i=0;i<nd->op_lst.size();i++)
-        if (sget(nd->op_lst[i]->type)==s_alias)
-          num_a++ ;
+      if (nd) {
+        /* sumerise alias count in select list */
+        for (i=0;i<nd->op_lst.size();i++) {
+          if (sget(nd->op_lst[i]->type)==s_alias)
+            num_a++ ;
+        }
+      }
     }
     /* find actual 'format' and 'values' list */
     for (;nd->op_lst[0]->type==mktype(m_list,s_norm);
       nd=nd->op_lst[0]);
     for (;node->op_lst[0]->type==mktype(m_list,s_norm);
       node=node->op_lst[0]);
-    /* compare list item counts */
-    if (node->op_lst.size()!=(nd->op_lst.size()-num_a)) {
-      printd("(%d) invalid syntax near '%s' \n",
-        __LINE__,sub_type_str(node->type));
-      return 0;
+
+    /* 
+     * compare list item counts 
+     */
+    /* it's single value list or select */
+    if (nd->op_lst[0]->type!=mktype(m_list,s_val_sub)) {
+      if (node->op_lst.size()!=(nd->op_lst.size()-num_a)) {
+        printd("(%d) invalid syntax near '%s' \n",
+          __LINE__,sub_type_str(node->type));
+        return 0;
+      }
+    } 
+    /* it's multiple value list sub items */
+    else {
+      for (auto np: nd->op_lst) {
+        if (np->op_lst.size()!=node->op_lst.size()) {
+          printd("(%d) invalid syntax near '%s' \n",
+            __LINE__,sub_type_str(node->type));
+          return 0;
+        }
+      }
+
     }
   }
   return 1;
