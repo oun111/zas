@@ -20,6 +20,7 @@
     <ClCompile Include="..\src\sql_checker.cpp" />
     <ClCompile Include="..\src\sql_exec.cpp" />
     <ClCompile Include="..\src\sql_tree.cpp" />
+    <ClCompile Include="..\src\sql_tree_ddl.cpp" />
     <ClCompile Include="..\src\zas.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
