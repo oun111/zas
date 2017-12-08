@@ -24,7 +24,7 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
 
  ### in c++, you may access MYSQL with ZAS like this:
  
-```
+```c++
  /* initialize connection object and login to database with MYSQL driver */
  zas_connect cnn(tnsFilePath,dal_mysql) ;
  /* initialize stream object with SQL-prepare mode */
@@ -40,6 +40,11 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
  
  /* fetch results */
  while (!streams[strs].eof()) {
+  int id=0;
+  char name[256] = "";
+  float point = 0.0;
+  long size = 0L;
+  
   streams>>id ;
   streams>>name ;
   streams>>point ;
@@ -50,14 +55,14 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
 }
 ```
 
-### in java, one should load the ZAS java library and play like this:
+### in java, one should set the correct path of ZAS java wrapper class into 'CLASSPATH' and play like this:
 
-```
+```java
 public class test_cases {
 
   public static void main(String[] args) throws Exception {
 
-    /* load zas wrapper class and do initializations with it */
+    /* initialize instance of zas.class and do initializations with it */
     zas mz = (zas)Class.forName("zas").newInstance();
 
     /* login to MYSQL */
@@ -66,26 +71,22 @@ public class test_cases {
     /* initialize the SQL */
     mz.prepare("select id,nvl(name),price,size from test_db.test_tbl where id<:f1<int>");
 
-    while (true) {
+    /* insert placeholder and execute SQL */
+    mz.insertInt(10);
 
-      /* insert placeholder and execute SQL */
-      mz.insertInt(10);
+    /* fetch results */
+    while (!mz.isEof()) {
+      Integer id = 0;
+      String name = "" ;
+      Double price = 0.0;
+      Long size = 0L; 
 
-      /* fetch results */
-      while (!mz.isEof()) {
-        Integer id = 0;
-        String name = "" ;
-        Double price = 0.0;
-        Long size = 0L; 
-
-        id = mz.fetchInt();
-        name = mz.fetchStr();
-        price = mz.fetchDouble();
-        size = mz.fetchLong();
-        System.out.println(id + ": name: " + name + ", point: " + 
-          price + ", size: " + size + "\n");
-      }   
-
+      id = mz.fetchInt();
+      name = mz.fetchStr();
+      price = mz.fetchDouble();
+      size = mz.fetchLong();
+      System.out.println(id + ": name: " + name + ", point: " + 
+        price + ", size: " + size + "\n");
     }   
 
   }
@@ -93,11 +94,11 @@ public class test_cases {
 
 ```
 
-### in python, one should load the ZAS python library and play like this:
+### in python, one should load the ZAS python wrapper class and play like this:
 
-```
+```python
 # load zas wrapper class
-sys.path.append("/mnt/sda5/zyw/work/zas/wrapper")
+sys.path.append(zasPythonWrapperPath)
 
 from python.zas import *
 
