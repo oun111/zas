@@ -20,6 +20,10 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
  * `win`: vss project files of zas under windows
  * `wrapper`: library classes for java/python that encapsulates APIs onto ZAS 
  
+## Wrappers
+ Both java and python wrappers load a c library named `libcwpr` that encapsulates
+   a completed usages of ZAS APIs
+ 
 ## HOWTO
 
  ### `In c++, one should access MYSQL with ZAS like this:`
@@ -55,7 +59,7 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
 }
 ```
 
-### `in java, one should set correct 'CLASSPATH' of ZAS java wrapper class and play like this:`
+### `In java, one should set correct 'CLASSPATH' of ZAS java wrapper class and play like this:`
 
 ```java
 public class test_cases {
@@ -94,7 +98,7 @@ public class test_cases {
 
 ```
 
-### `in python, one should load ZAS python wrapper class and play like this:`
+### `In python, one should load ZAS python wrapper class and play like this:`
 
 ```python
 
