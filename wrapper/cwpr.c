@@ -6,9 +6,7 @@
 #define __mod_ver__ "0.0.1 alpha "
 
 zas_connect g_conn((char*)"",dal_mysql) ;
-//std::shared_ptr<zas_connect> g_conn ;
 zas_stream g_stream(g_conn);
-//std::shared_ptr<zas_stream> g_stream;
 
 extern "C" {
 
@@ -18,11 +16,6 @@ int rlogon(char *dsn)
     printd("dsn/tns should not be NULL\n");
     return -1;
   }
-
-#if 0
-  g_conn = std::make_shared<zas_connect>();
-  g_stream = std::make_shared<zas_stream>();
-#endif
 
   try {
     if (!g_conn.rlogon(dsn))

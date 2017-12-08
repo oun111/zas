@@ -17,27 +17,23 @@ public class test_cases {
 
     mz.prepare("select id,name,price,size from test_db.test_tbl where id<:f1<int>");
 
-    while (true) {
+    mz.insertInt(10);
 
-      mz.insertInt(10);
+    while (!mz.isEof()) {
+      Integer id = 0;
+      String name = "" ;
+      Double price = 0.0;
+      Long size = 0L;
 
-      while (!mz.isEof()) {
-        Integer id = 0;
-        String name = "" ;
-        Double price = 0.0;
-        Long size = 0L;
-
-        id = mz.fetchInt();
-        name = mz.fetchStr();
-        price = mz.fetchDouble();
-        size = mz.fetchLong();
-        System.out.println(id + ": name: " + name + ", point: " + 
-          price + ", size: " + size + "\n");
-      }
-
-      //System.out.println("ok!\n");
-
+      id = mz.fetchInt();
+      name = mz.fetchStr();
+      price = mz.fetchDouble();
+      size = mz.fetchLong();
+      System.out.println(id + ": name: " + name + ", point: " + 
+        price + ", size: " + size + "\n");
     }
+
+    //System.out.println("ok!\n");
 
   }
 }
