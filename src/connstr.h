@@ -13,17 +13,18 @@
 #endif
 
 
-/* max length of a token */
-const int TKNLEN = /*64*/68;
-const int PWDLEN = 256;
-const int LONG_DATABUF_LEN =/*128*/4096;
-
-
 namespace LEX_GLOBAL {
+
+  /* max length of a token */
+  constexpr auto TKNLEN = /*64*/68;
+  constexpr auto PWDLEN = 256;
+  constexpr auto LONG_DATABUF_LEN =/*128*/4096;
 
   extern uint16_t next_token(std::string &str,uint16_t pos, 
     char *buf, int length=TKNLEN) ;
 } ;
+
+using namespace LEX_GLOBAL;
 
 class tns_parser {
 public:
@@ -67,13 +68,13 @@ public:
 } ;
 
 class my_dsn_parser {
-/* keyword name definition in a dsn string */
-const char* DSN_HOST = "server";
-const char* DSN_PORT = "port";
-const char* DSN_USR  = "usr";
-const char* DSN_PWD  = "pwd";
-const char* DSN_DB   = "dbname";
-const char* DSN_SOCK = "unix_socket";
+  /* keyword name definition in a dsn string */
+  const char* DSN_HOST = "server";
+  const char* DSN_PORT = "port";
+  const char* DSN_USR  = "usr";
+  const char* DSN_PWD  = "pwd";
+  const char* DSN_DB   = "dbname";
+  const char* DSN_SOCK = "unix_socket";
 protected:
   using dsn_info = struct tDsnInfo {
     char chUser[TKNLEN];
