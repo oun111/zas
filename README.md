@@ -22,9 +22,9 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
  
 ## HOWTO
 
- * in c++, you may access MYSQL with ZAS like this:
+ ### in c++, you may access MYSQL with ZAS like this:
  
- '''
+```
  /* initialize connection object with MYSQL database driver */
  zas_connect cnn(tnsFilePath,dal_mysql) ;
  /* initialize stream object with SQL-prepare mode */
@@ -48,4 +48,4 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
   printd("%d: name %s, point %f, size %ld\n",
     id, name, point, size);
 }
- '''
+```
