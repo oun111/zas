@@ -15,14 +15,14 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
  * load zas library into your java/python applications
  
 ## Roadmap
- * `src`: source code of zas library
+ * `src`: core of zas library
  * `tests`: test cases of zas
- * `win`: project files of zas under windows
- * `wrapper`: wrapper library for java/python
+ * `win`: vss project files of zas under windows
+ * `wrapper`: library classes for java/python that encapsulates APIs onto ZAS 
  
 ## HOWTO
 
- ### in c++, you may access MYSQL with ZAS like this:
+ ### `in c++, you may access MYSQL with ZAS like this:`
  
 ```c++
  /* initialize connection object and login to database with MYSQL driver */
@@ -55,7 +55,7 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
 }
 ```
 
-### in java, one should set the correct path of ZAS java wrapper class into 'CLASSPATH' and play like this:
+### `in java, one should set correct 'CLASSPATH' of ZAS java wrapper class and play like this:`
 
 ```java
 public class test_cases {
@@ -94,12 +94,14 @@ public class test_cases {
 
 ```
 
-### in python, one should load the ZAS python wrapper class and play like this:
+### `in python, one should load ZAS python wrapper class and play like this:`
 
 ```python
-# load zas wrapper class
+
+# path of ZAS python wrapper class
 sys.path.append(zasPythonWrapperPath)
 
+# load the wrapper class
 from python.zas import *
 
 def main():
