@@ -21,8 +21,9 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
  * `wrapper`: library classes for java/python that encapsulates APIs onto ZAS 
  
 ## Wrappers
- Both java and python wrappers load a c library named `libcwpr` that encapsulates
-   a completed usages of ZAS APIs
+ * both java and python wrappers load a c library named `libcwpr` that encapsulates a set of usage with ZAS APIs. see wrapper/cwpr.c for more details
+ * in java wrapper, it calls cwpr methods with JNI interfaces
+ * in python wrapper, it dynamically loads the cwpr library
  
 ## HOWTO
 
