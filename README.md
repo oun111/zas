@@ -22,7 +22,7 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
  
 ## HOWTO
 
- ### `in c++, you may access MYSQL with ZAS like this:`
+ ### `In c++, one should access MYSQL with ZAS like this:`
  
 ```c++
  /* initialize connection object and login to database with MYSQL driver */
@@ -31,7 +31,7 @@ ZAS is a database client library(currently for MYSQL), with which, you may acces
  zas_stream stream(cnn,true);
  
  /* initialize the ORACLE-style SQL */
- stream.open(0,"select id,`nvl(name)`,price from test_db.test_tbl "
+ stream.open(0,"select id,nvl(name),price from test_db.test_tbl "
         "where id>=:f1<unsigned int> and id<:f2<int,in>");
  
  /* insert place holders and execute the SQL */
@@ -68,7 +68,7 @@ public class test_cases {
     /* login to MYSQL */
     mz.login("localhost",3306,"root","123","");
 
-    /* initialize the SQL */
+    /* initialize the ORACLE-style SQL */
     mz.prepare("select id,nvl(name),price,size from test_db.test_tbl where id<:f1<int>");
 
     /* insert placeholder and execute SQL */
@@ -114,8 +114,8 @@ def main():
     print("login fail\n")
     exit(-1)
 
-  # initialize the SQL
-  if mz.prepare('select *from test_db.test_tbl where id <:f1<int>')!=0 :
+  # initialize the ORACLE-style SQL
+  if mz.prepare('select nvl(id),name,price,size from test_db.test_tbl where id <:f1<int>')!=0 :
     print("prepare fail\n")
     exit(-1)
 
