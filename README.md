@@ -1,7 +1,9 @@
+
 ## What is ZAS
  - ZAS（Zhou’s Adaptor of Sql）is being developed based on the ‘MYSQL Client/Server Protocol’
  - ZAS is a C++ library that used by applications to access MYSQL databases
  - ZAS can translate SQL syntax automatically 
+
 
 ## Features
  - Cross platforms: 32/64 bit processors supports, linux and windows supports
@@ -15,17 +17,19 @@
  - Good extensibility
  - Being tested over a year and runs steadily
 
+
 ## Structure
 
  ![Alt text](https://github.com/oun111/images/blob/master/zas_structure.png)
 
- - DSN processor: processes the DB connection string including the Oracle TNS and traditional DSN format
+ - Connection String processor: processes the DB connection strings including Oracle TNS and traditional DSN format
  - Protocol Management: 
    1. implements the ‘MYSQL Client/Server Protocol’
    2. given fully support for the ‘prepare’ and ‘query’ mode
    3. also provides API compatibilities with ‘libmysqlclient
  - SQL Syntax Engine: performs SQL syntax analyzing/checking/translations
  - OTLV4 Compatible API: provides a set of c++ classes that compatible with OTLV4 libraries
+
 
 ## Process Flow
 
@@ -37,6 +41,7 @@
  - Last, fetching the result
  - Further more, one can `reopen` a new SQL or `execute` the old one again
  
+ 
 ## Connection String Handling
 
  ![Alt text](https://github.com/oun111/images/blob/master/zas_conn_str.png)
@@ -45,6 +50,7 @@
   1. if it’s TNS format, the processor will parse the TNS file for login informations
   2. if it’s DSN format, the processor will parse it directly
   3. otherwise, throws C++ exception 
+
 
 ## the SQL Syntax Engine
 
@@ -56,12 +62,14 @@
  - then, all place-holders within the tree will be processed
  - last, the tree will be serialized to string form and passed to output
 
-## Compiling and Install
+
+## Compiling and Installing
 
  - Simply do `make clean install` under source root directory
- - These things will be generated: the `libzas.a`, `libzas.so`, the `zas wrapper` library
- - link zas library to your c++ applications
- - load zas library into your java/python applications
+ - The `libzas.a`, `libzas.so`, and `zas wrapper` library will be generated
+ - Link the `.a` or `.so` library to your c++ applications
+ - Load the wrapper library into your java/python applications
+ 
  
 ## Roadmap
  * `src`: core of zas library
@@ -69,10 +77,12 @@
  * `win`: vss project files of zas under windows
  * `wrapper`: library classes for java/python that encapsulates APIs onto ZAS 
  
+ 
 ## Wrappers
  * both java and python wrappers load a c library named `libcwpr` that encapsulates a set of usage with ZAS APIs. see wrapper/cwpr.c for more details
  * in java wrapper, it calls `libcwpr` methods with JNI interfaces
  * in python wrapper, it dynamically loads the `libcwpr`
+ 
  
 ## HOWTO
 
