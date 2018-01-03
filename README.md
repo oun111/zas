@@ -1,6 +1,6 @@
 
 ## What is ZAS
- - ZAS（Zhou’s Adaptor of Sql）is being developed based on the ‘MYSQL Client/Server Protocol’
+ - ZAS（Zhou’s Adaptor of Sql）is being developed based on the `MYSQL Client/Server Protocol`
  - ZAS is a C++ library that used by applications to access MYSQL databases
  - ZAS can translate SQL syntax automatically 
 
@@ -12,8 +12,8 @@
  - Provides automatically SQL syntax translations that is transparent to upper applications
  - Supports most SQL syntaxs in ORACLE/MYSQL 
  - Good performance in SQL syntax analyzing
- - The underlying ‘MYSQL Client/Server Protocol’ is being optimized
- - Conceals complexities of ‘MYSQL Client/Server Protocol’
+ - The underlying `MYSQL Client/Server Protocol` is being optimized
+ - Conceals complexities of `MYSQL Client/Server Protocol`
  - Good extensibility
  - Being tested over a year and runs steadily
 
@@ -24,9 +24,9 @@
 
  - Connection String processor: processes the DB connection strings including Oracle TNS and traditional DSN format
  - Protocol Management(the `MYSQLC` libray) provides:
-    1. implementations of the ‘MYSQL Client/Server Protocol’
-    2. fully support for the ‘prepare’ and ‘query’ mode
-    3. API compatibilities with ‘libmysqlclient
+    1. implementations of the `MYSQL Client/Server Protocol`
+    2. fully support for the `prepare` and `query` mode
+    3. API compatibilities with `libmysqlclient`
  - SQL Syntax Engine: performs SQL syntax analyzing/checking/translations
  - OTLV4 Compatible API: provides a set of c++ classes that compatible with OTLV4 libraries
 
