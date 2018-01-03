@@ -24,9 +24,9 @@
 
  - Connection String processor: processes the DB connection strings including Oracle TNS and traditional DSN format
  - Protocol Management(the `MYSQLC` libray) provides:
-   1. implementations of the ‘MYSQL Client/Server Protocol’
-   2. fully support for the ‘prepare’ and ‘query’ mode
-   3. API compatibilities with ‘libmysqlclient
+    1. implementations of the ‘MYSQL Client/Server Protocol’
+    2. fully support for the ‘prepare’ and ‘query’ mode
+    3. API compatibilities with ‘libmysqlclient
  - SQL Syntax Engine: performs SQL syntax analyzing/checking/translations
  - OTLV4 Compatible API: provides a set of c++ classes that compatible with OTLV4 libraries
 
@@ -47,9 +47,9 @@
  ![Alt text](https://github.com/oun111/images/blob/master/zas_conn_str.png)
 
  - When login, the connection string is passed to the `connection string processor` which will test  the inputed string
-  1. if it’s TNS format, the processor will parse the TNS file for login informations
-  2. if it’s DSN format, the processor will parse it directly
-  3. otherwise, throws C++ exception 
+    1. if it’s TNS format, the processor will parse the TNS file for login informations
+    2. if it’s DSN format, the processor will parse it directly
+    3. otherwise, throws C++ exception 
 
 
 ## the SQL Syntax Engine
