@@ -74,8 +74,8 @@
 
 
  - The application may also execute SQL under `prepare mode`. The SQL execution progress is seperated into 2 requests:
-  1. the primordial SQL statement is sent to server by `com_stmt_prepare` to prepare resources and do checkings at server side
-  2. the place-holder value list are embeded into the `com_stmt_execute` request to initiate the `SQL execution` progress, and the `binary/string/blob` type place-holders values should be sent by `com_send_long_data` requests especially,  Here’s the diagram:
+    1. the primordial SQL statement is sent to server by `com_stmt_prepare` to prepare resources and do checkings at server side
+    2. the place-holder value list are embeded into the `com_stmt_execute` request to initiate the `SQL execution` progress, and the `binary/string/blob` type place-holders values should be sent by `com_send_long_data` requests especially,  Here’s the diagram:
 
  ![Alt text](https://github.com/oun111/images/blob/master/zas_prepare.png)
 
