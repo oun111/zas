@@ -1,18 +1,67 @@
-# ZAS
+## What is ZAS
+ - ZAS（Zhou’s Adaptor of Sql）is being developed based on the ‘MYSQL Client/Server Protocol’
+ - ZAS is a C++ library that used by applications to access MYSQL databases
+ - ZAS can translate SQL syntax automatically 
 
-ZAS is a database client library(currently for MYSQL), with which, you may access a database that are unfamiliar to you with another SQL language that you're fluent in it. 
+## Features
+ - Cross platforms: 32/64 bit processors supports, linux and windows supports
+ - Cross languages: you may use ZAS with c++, java, python
+ - Provides OTLV4-compatible interfaces
+ - Provides automatically SQL syntax translations that is transparent to upper applications
+ - Supports most SQL syntaxs in ORACLE/MYSQL 
+ - Good performance in SQL syntax analyzing
+ - The underlying ‘MYSQL Client/Server Protocol’ is being optimized
+ - Conceals complexities of ‘MYSQL Client/Server Protocol’
+ - Good extensibility
+ - Being tested over a year and runs steadily
 
-## Feature
- * do sql language adaptions, we support oracle to mysql currently
- * database access tool
- * sql syntax analyze and checking
- * cross platforms usages: linux, windows
- * you may use ZAS with c++, java, python
+## Structure
 
-## Install
+ ![Alt text](https://github.com/oun111/images/blob/master/zas_structure.png)
 
- * link zas library to your c++ applications
- * load zas library into your java/python applications
+ - DSN processor: processes the DB connection string including the Oracle TNS and traditional DSN format
+ - Protocol Management: 
+   1. implements the ‘MYSQL Client/Server Protocol’
+   2. given fully support for the ‘prepare’ and ‘query’ mode
+   3. also provides API compatibilities with ‘libmysqlclient
+ - SQL Syntax Engine: performs SQL syntax analyzing/checking/translations
+ - OTLV4 Compatible API: provides a set of c++ classes that compatible with OTLV4 libraries
+
+## Process Flow
+
+ ![Alt text](https://github.com/oun111/images/blob/master/zas_process_flow.png)
+
+ - First of all, the application should call `rlogon() ` to parse connection strings and to do database login 
+ - Second, the application should call `open()` to initialize the SQL and translate it
+ - Third, the application should input enough place holder values to execute the statement
+ - Last, fetching the result
+ - Further more, one can `reopen` a new SQL or `execute` the old one again
+ 
+## Connection String Handling
+
+ ![Alt text](https://github.com/oun111/images/blob/master/zas_conn_str.png)
+
+ - When login, the connection string is passed to the `connection string processor` which will test  the inputed string
+  1. if it’s TNS format, the processor will parse the TNS file for login informations
+  2. if it’s DSN format, the processor will parse it directly
+  3. otherwise, throws C++ exception 
+
+## the SQL Syntax Engine
+
+ ![Alt text](https://github.com/oun111/images/blob/master/zas_syntax_engine.png)
+
+ - when a SQL is inputed, it would be processed by a hard-coding  parser and be translated to a syntax tree
+ - if no errors, the tree will be scaned for syntax errors
+ - if everythings’ ok, the tree will be scaned again for `translation points` to being translated to `MYSQL-style` syntax
+ - then, all place-holders within the tree will be processed
+ - last, the tree will be serialized to string form and passed to output
+
+## Compiling and Install
+
+ - Simply do `make clean install` under source root directory
+ - These things will be generated: the `libzas.a`, `libzas.so`, the `zas wrapper` library
+ - link zas library to your c++ applications
+ - load zas library into your java/python applications
  
 ## Roadmap
  * `src`: core of zas library
