@@ -23,10 +23,10 @@
  ![Alt text](https://github.com/oun111/images/blob/master/zas_structure.png)
 
  - Connection String processor: processes the DB connection strings including Oracle TNS and traditional DSN format
- - Protocol Management: 
-   1. implements the ‘MYSQL Client/Server Protocol’
-   2. given fully support for the ‘prepare’ and ‘query’ mode
-   3. also provides API compatibilities with ‘libmysqlclient
+ - Protocol Management(the `MYSQLC` libray) provides:
+   1. implementations of the ‘MYSQL Client/Server Protocol’
+   2. fully support for the ‘prepare’ and ‘query’ mode
+   3. API compatibilities with ‘libmysqlclient
  - SQL Syntax Engine: performs SQL syntax analyzing/checking/translations
  - OTLV4 Compatible API: provides a set of c++ classes that compatible with OTLV4 libraries
 
@@ -61,6 +61,23 @@
  - if everythings’ ok, the tree will be scaned again for `translation points` to being translated to `MYSQL-style` syntax
  - then, all place-holders within the tree will be processed
  - last, the tree will be serialized to string form and passed to output
+
+
+## The MYSQLC library
+
+ - The library provides the following functionalities: database login, SQL execution, result fetching, protocol compression, connection maintainance
+ - The protocol compression invokes the `deflate` algorithm from zlib 
+ - The library employs the `ping` protocol to maintain the database connection
+ - To execute a SQL statement, the application may use `query mode` with which all place holder values are embeded within the SQL statement string that will be sent to server by a single `com_query` request, here’s the diagram:
+
+ ![Alt text](https://github.com/oun111/images/blob/master/zas_query.png)
+
+
+ - The application may also execute SQL under `prepare mode`. The SQL execution progress is seperated into 2 requests:
+  1. the primordial SQL statement is sent to server by `com_stmt_prepare` to prepare resources and do checkings at server side
+  2. the place-holder value list are embeded into the `com_stmt_execute` request to initiate the `SQL execution` progress, and the `binary/string/blob` type place-holders values should be sent by `com_send_long_data` requests especially,  Here’s the diagram:
+
+ ![Alt text](https://github.com/oun111/images/blob/master/zas_prepare.png)
 
 
 ## Compiling and Installing
