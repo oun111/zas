@@ -480,6 +480,8 @@ extern int mysql_stmt_exec_get_ph(char*,int,int,
 extern size_t mysql_stmt_exec_get_ph_subsequent(
   char*,bool,int,int,char*);
 
+extern int test_conn(MYSQL *mysql);
+
 #ifdef	__cplusplus
 }
 #endif

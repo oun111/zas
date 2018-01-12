@@ -657,7 +657,7 @@ static int mysql_reconnect(MYSQL *mysql)
     pc->user,pc->passwd,pc->db,pc->port,NULL,0);
 }
 
-static int test_conn(MYSQL *mysql)
+/*static*/ int test_conn(MYSQL *mysql)
 {
   if (!mysql) {
     return -1;
