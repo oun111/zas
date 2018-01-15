@@ -1,4 +1,7 @@
 Changes:
+  Jan 15, 2017:
+    1. add support for long 'host' field in tnsnames.ora that up to 128 bytes, such as an URL
+
   Dec 4, 2017:
     1. add support for multiple value list items syntax like : 
     

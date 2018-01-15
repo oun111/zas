@@ -20,6 +20,7 @@
 #include <memory>
 #include <string>
 #include "mysqlc.h"
+#include "connstr.h"
 
 /* version number string of this module */
 #define __MOD_VER__  "0.0.4 alpha"
@@ -38,7 +39,7 @@ protected:
     char chUser[64];
     char chPwd[256];
     char chTns[32];
-    char chHost[32] ;
+    char chHost[/*32*/EXT_TKNLEN] ;
     char chProto[16] ;
     uint32_t port;
     char chDb[32];

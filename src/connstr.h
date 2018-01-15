@@ -18,6 +18,7 @@ namespace LEX_GLOBAL {
   /* max length of a token */
   constexpr auto TKNLEN = /*64*/68;
   constexpr auto PWDLEN = 256;
+  constexpr auto EXT_TKNLEN = 128;
   constexpr auto LONG_DATABUF_LEN =/*128*/4096;
 
   extern uint16_t next_token(std::string &str,uint16_t pos, 
@@ -38,7 +39,7 @@ protected:
   using tns_info =  struct tTnsInfo {
     char key[TKNLEN] ;
     bool bEval ;
-    char val[TKNLEN];
+    char val[EXT_TKNLEN];
   } ;
   /* the tns string info */
   tns_info t_tbl[tMax] ;
@@ -79,7 +80,7 @@ protected:
   using dsn_info = struct tDsnInfo {
     char chUser[TKNLEN];
     char chPwd[PWDLEN];
-    char chHost[TKNLEN] ;
+    char chHost[EXT_TKNLEN] ;
     uint32_t port;
     char chDb[TKNLEN];
     char chSock[PATH_MAX];

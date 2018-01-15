@@ -9,7 +9,7 @@
 #include <stack>
 #include <string>
 #include "zas.h"
-#include "connstr.h"
+//#include "connstr.h"
 #include "attrib_list.h"
 #include "sql_exec.h"
 #include "adaptors.h"

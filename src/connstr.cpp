@@ -162,7 +162,7 @@ int tns_parser::do_recurse_parse(FILE *file)
           }
           /* do evaluation */
           /* 2016.4.22: may lead to 'out of bound' error, fix it */
-          ln = ln<TKNLEN?ln:(TKNLEN-1); 
+          ln = ln<EXT_TKNLEN?ln:(EXT_TKNLEN-1); 
           strncpy(t_tbl[last_key].val,token,ln);
           t_tbl[last_key].val[ln] = '\0';
           bEndLoop = true ;
@@ -408,7 +408,7 @@ int tns_parser::parse_conn_str(char *str, std::string &tns_path)
       "name, '%c' expected\n", '/');
     return 0;
   }
-  ln = (p-str)>TKNLEN?TKNLEN:(p-str) ;
+  ln = (p-str)>EXT_TKNLEN?EXT_TKNLEN:(p-str) ;
   strncpy(t_tbl[tUsr].val,str,ln);
   t_tbl[tUsr].val[/*p-str*/ln] = '\0';
   p = strchr(str,'/')+1;
@@ -420,7 +420,7 @@ int tns_parser::parse_conn_str(char *str, std::string &tns_path)
       "name, '%c' expected\n", '@');
     return 0;
   }
-  ln = (p-str)>TKNLEN?TKNLEN:(p-str) ;
+  ln = (p-str)>EXT_TKNLEN?EXT_TKNLEN:(p-str) ;
   strncpy(t_tbl[tPwd].val,str,ln);
   t_tbl[tPwd].val[/*p-str*/ln] = '\0';
   p = strchr(str,'@')+1;
@@ -498,7 +498,7 @@ int my_dsn_parser::parse_conn_str(char *str)
    * also process with alias names
    */
   /* server */
-  if (!parse_dsn_element(str,DSN_HOST,d_info.chHost,TKNLEN)) {
+  if (!parse_dsn_element(str,DSN_HOST,d_info.chHost,EXT_TKNLEN)) {
     /* report an error */
     return 0;
   }
