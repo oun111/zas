@@ -158,6 +158,9 @@ namespace STREE_TYPES {
     s_comment, /* keyword 'comment' */
     s_cascade, /* keyword 'cascade' */
     s_restrict, /* keyword 'restrict' */
+    s_engine, /* keyword 'engine' */
+    s_status, /* keyword 'status' */
+    s_mutex, /* keyword 'mutex' */
   } ;
   enum endp_type { 
     s_tbl, s_schema, s_func, 
@@ -377,6 +380,9 @@ namespace STREE_TYPES {
    sget(t)==s_comment?"comment":      \
    sget(t)==s_cascade?"cascade":      \
    sget(t)==s_restrict?"restrict":    \
+   sget(t)==s_engine?"engine":    \
+   sget(t)==s_status?"status":    \
+   sget(t)==s_mutex?"mutex":    \
    "attr type n/a"):                  \
   mget(t)==m_cdt?                     \
    (sget(t)==cda_col?"col name":      \
@@ -463,6 +469,8 @@ public:
    &sql_tree::parse_ob_keys:           \
    (t)==s_dTbl_lst?     \
    &sql_tree::parse_dtbl_keys:         \
+   (t)==s_show_lst?     \
+   &sql_tree::parse_show_keys:         \
    NULL                                \
 )
 
@@ -658,6 +666,8 @@ private:
   stxNode* parse_dtbl_keys(char*,int&);
   /* syntax processing on 'drop xxx' statement */
   int parse_drop_stmt(stxNode*,int&);
+  /* parse keywords in 'show xxx' list */
+  stxNode* parse_show_keys(char*,int&);
 } ;
 
 class tree_serializer : public sql_tree {

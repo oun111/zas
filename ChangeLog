@@ -1,4 +1,7 @@
 Changes:
+  Jan 19, 2017:
+    1. add complete support for the 'show xxx' syntax
+
   Jan 15, 2017:
     1. add support for long 'host' field in tnsnames.ora that up to 128 bytes, such as an URL
 

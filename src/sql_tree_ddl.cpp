@@ -9,6 +9,27 @@ using namespace STREE_TYPES;
 using namespace LEX_GLOBAL;
 
 
+/* parse keyword in 'show xxx' list */
+stxNode* sql_tree::parse_show_keys(
+  char *tkn, int &p)
+{
+  int st = s_none; 
+
+  if (!strcasecmp(tkn,"engine")) {
+    st = s_engine ;
+  } else if (!strcasecmp(tkn,"status")) {
+    st = s_status ;
+  } else if (!strcasecmp(tkn,"mutex")) {
+    st = s_mutex ;
+  } else {
+    //printd("unknown keyword '%s' in 'order by' stmt\n", tkn);
+    return NULL ;
+  }
+  mov(p,tkn);
+
+  return create_node(NULL,m_keyw,st);
+}
+
 /* parse keyword in 'drop table' list */
 stxNode* sql_tree::parse_dtbl_keys(
   char *tkn, int &p)
