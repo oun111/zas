@@ -1711,6 +1711,7 @@ MYSQL* mysql_init(MYSQL *mysql)
   mysql->ucomp_tmp.total = 0;
   /* fast rx mode */
   mysql->fast_rx = false;
+  mysql->sock = 0;
   return mysql ;
 }
 

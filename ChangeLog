@@ -1,8 +1,11 @@
 Changes:
-  Jan 19, 2017:
+  Jan 24, 2018:
+    1. zero the mysql client fd when calling mysql_init()
+
+  Jan 19, 2018:
     1. add complete support for the 'show xxx' syntax
 
-  Jan 15, 2017:
+  Jan 15, 2018:
     1. add support for long 'host' field in tnsnames.ora that up to 128 bytes, such as an URL
 
   Dec 4, 2017:
