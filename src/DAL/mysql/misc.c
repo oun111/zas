@@ -168,8 +168,12 @@ size_t getstr(MYSQL_BIND *bind, char *in)
 /* do malloc with size alignment */
 void* a_alloc(char *p,size_t s)
 {
+#if 0
 #define ALIGN_P  (sizeof(double)-1)
   size_t a_sz = (s+ALIGN_P)&(~ALIGN_P) ;
+#else
+  size_t a_sz = s ;
+#endif
 
   return realloc(p,a_sz);
 }

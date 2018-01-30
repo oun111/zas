@@ -21,6 +21,8 @@ stxNode* sql_tree::parse_show_keys(
     st = s_status ;
   } else if (!strcasecmp(tkn,"mutex")) {
     st = s_mutex ;
+  } else if (!strcasecmp(tkn,"global")) {
+    st = s_global ;
   } else {
     //printd("unknown keyword '%s' in 'order by' stmt\n", tkn);
     return NULL ;

@@ -161,6 +161,7 @@ namespace STREE_TYPES {
     s_engine, /* keyword 'engine' */
     s_status, /* keyword 'status' */
     s_mutex, /* keyword 'mutex' */
+    s_global, /* keyword 'global' */
   } ;
   enum endp_type { 
     s_tbl, s_schema, s_func, 
@@ -383,6 +384,7 @@ namespace STREE_TYPES {
    sget(t)==s_engine?"engine":    \
    sget(t)==s_status?"status":    \
    sget(t)==s_mutex?"mutex":    \
+   sget(t)==s_global?"global":    \
    "attr type n/a"):                  \
   mget(t)==m_cdt?                     \
    (sget(t)==cda_col?"col name":      \
