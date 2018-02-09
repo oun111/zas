@@ -17,12 +17,20 @@ stxNode* sql_tree::parse_show_keys(
 
   if (!strcasecmp(tkn,"engine")) {
     st = s_engine ;
+  } else if (!strcasecmp(tkn,"engines")) {
+    st = s_engines ;
   } else if (!strcasecmp(tkn,"status")) {
     st = s_status ;
   } else if (!strcasecmp(tkn,"mutex")) {
     st = s_mutex ;
   } else if (!strcasecmp(tkn,"global")) {
     st = s_global ;
+  } else if (!strcasecmp(tkn,"variables")) {
+    st = s_vars ;
+  } else if (!strcasecmp(tkn,"errors")) {
+    st = s_err ;
+  } else if (!strcasecmp(tkn,"warnings")) {
+    st = s_warn ;
   } else {
     //printd("unknown keyword '%s' in 'order by' stmt\n", tkn);
     return NULL ;

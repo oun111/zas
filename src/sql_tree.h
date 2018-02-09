@@ -159,9 +159,13 @@ namespace STREE_TYPES {
     s_cascade, /* keyword 'cascade' */
     s_restrict, /* keyword 'restrict' */
     s_engine, /* keyword 'engine' */
+    s_engines, /* keyword 'engines' */
     s_status, /* keyword 'status' */
     s_mutex, /* keyword 'mutex' */
     s_global, /* keyword 'global' */
+    s_vars, /* keyword 'variables' */
+    s_err, /* keyword 'errors' */
+    s_warn, /* keyword 'warnings' */
   } ;
   enum endp_type { 
     s_tbl, s_schema, s_func, 
@@ -382,9 +386,13 @@ namespace STREE_TYPES {
    sget(t)==s_cascade?"cascade":      \
    sget(t)==s_restrict?"restrict":    \
    sget(t)==s_engine?"engine":    \
+   sget(t)==s_engines?"engines":    \
    sget(t)==s_status?"status":    \
    sget(t)==s_mutex?"mutex":    \
    sget(t)==s_global?"global":    \
+   sget(t)==s_vars?"variables":    \
+   sget(t)==s_err?"errors":    \
+   sget(t)==s_warn?"warnings":    \
    "attr type n/a"):                  \
   mget(t)==m_cdt?                     \
    (sget(t)==cda_col?"col name":      \
