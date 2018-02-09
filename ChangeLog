@@ -2,6 +2,9 @@ Changes:
   Feb 9, 2018:
     1. add keyword 'variables' 'errors' 'warnings' 'processlist' support for 'show' statements
 
+    2. add support for 'show ... like' syntax
+
+
   Jan 30, 2018:
     1. add keyword 'global' support for 'show' statements
 

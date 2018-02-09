@@ -19,14 +19,16 @@ stxNode* sql_tree::parse_show_keys(
     st = s_engine ;
   } else if (!strcasecmp(tkn,"engines")) {
     st = s_engines ;
-  } else if (!strcasecmp(tkn,"status")) {
-    st = s_status ;
   } else if (!strcasecmp(tkn,"mutex")) {
     st = s_mutex ;
   } else if (!strcasecmp(tkn,"global")) {
     st = s_global ;
+#if 0
+  } else if (!strcasecmp(tkn,"status")) {
+    st = s_status ;
   } else if (!strcasecmp(tkn,"variables")) {
     st = s_vars ;
+#endif
   } else if (!strcasecmp(tkn,"errors")) {
     st = s_err ;
   } else if (!strcasecmp(tkn,"warnings")) {

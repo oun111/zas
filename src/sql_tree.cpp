@@ -2253,8 +2253,21 @@ int sql_tree::parse_casewhen_stmt(stxNode *parent, int &p)
 
 int sql_tree::parse_show_stmt(stxNode *parent, int &p)
 {
+  stxNode *plst = 0;
+
   /* parse 'show <target>' list */
-  parse_list(parent,s_show_lst,p);
+  parse_list(parent,s_show_lst,p,&plst);
+
+  /* check for last element of 'show list', if 
+   *  it is alias and its content is digit, change
+   *  its type to 'constant int' */
+  size_t ln = plst->op_lst.size();
+  stxNode *lastEle = plst->op_lst[ln-1];
+
+  if (lastEle->type==mktype(m_endp,s_alias)) {
+    lastEle->type = mktype(m_endp,s_c_int);
+  }
+
   return 1;
 }
 
