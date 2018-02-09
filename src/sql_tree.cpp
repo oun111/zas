@@ -2266,6 +2266,9 @@ int sql_tree::parse_show_stmt(stxNode *parent, int &p)
 
   if (lastEle->type==mktype(m_endp,s_alias)) {
     lastEle->type = mktype(m_endp,s_c_int);
+
+    printd("changing node type to '%s'\n",
+      sub_type_str(lastEle->type));
   }
 
   return 1;
