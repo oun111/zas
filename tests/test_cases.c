@@ -184,10 +184,9 @@ int main(int argc, char *argv[])
 
     printd("<<< test zas streaming : \n");
     try {
-#if 1
+#if 0
       {
         printd("test 0\n");
-      streams[strs].open(0,"show /*errors*/warnings 0");
         return 0;
       }
 #endif
