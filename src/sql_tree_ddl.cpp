@@ -31,6 +31,8 @@ stxNode* sql_tree::parse_show_keys(
     st = s_err ;
   } else if (!strcasecmp(tkn,"warnings")) {
     st = s_warn ;
+  } else if (!strcasecmp(tkn,"processlist")) {
+    st = s_proclst ;
   } else {
     //printd("unknown keyword '%s' in 'order by' stmt\n", tkn);
     return NULL ;

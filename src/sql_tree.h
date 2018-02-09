@@ -166,6 +166,7 @@ namespace STREE_TYPES {
     s_vars, /* keyword 'variables' */
     s_err, /* keyword 'errors' */
     s_warn, /* keyword 'warnings' */
+    s_proclst, /* keyword 'processlist' */
   } ;
   enum endp_type { 
     s_tbl, s_schema, s_func, 
@@ -393,6 +394,7 @@ namespace STREE_TYPES {
    sget(t)==s_vars?"variables":    \
    sget(t)==s_err?"errors":    \
    sget(t)==s_warn?"warnings":    \
+   sget(t)==s_proclst?"processlist":    \
    "attr type n/a"):                  \
   mget(t)==m_cdt?                     \
    (sget(t)==cda_col?"col name":      \
