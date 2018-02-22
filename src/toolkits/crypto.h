@@ -9,7 +9,7 @@ extern "C" {
 extern int gen_auth_data(char*, size_t, 
   const char*, uint8_t*);
 
-extern uint32_t str2id(char*);
+extern uint32_t str2id(char*,size_t);
 
 #ifdef __cplusplus
 }

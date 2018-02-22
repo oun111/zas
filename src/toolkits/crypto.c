@@ -62,15 +62,16 @@ int gen_auth_data(char *scramble, size_t sc_len,
   return 0;
 }
 
-uint32_t str2id(char *s)
+uint32_t str2id(char *s,size_t sz)
 {
   uint32_t ret=0;
   uint16_t i=0;
   char *p = s;
+  char *pEnd = s+sz;
 
   if (!p) 
     return 0;
-  for (;p&&*p;p++) 
+  for (;p&&*p&&p<pEnd;p++) 
     ret += (*p^i) ;
   ret ^= (32&strlen(s)) ; 
   return ret ;
