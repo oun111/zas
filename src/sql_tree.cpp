@@ -2297,6 +2297,14 @@ int sql_tree::parse_truncate_stmt(stxNode *parent, int &p)
   if (!strcasecmp(buf,"table")) {
     mov(p,buf);
   }
+  /* yzhou 2018.5.31: it's the truncate() function call */
+  else if (*buf=='(') {
+    /* search for the backwards token */
+    p = prev_token(s,p-1,buf);
+    attach(parent,parse_endpoint_item(p));
+    parent->type = mktype(m_endp,s_func);
+    strcpy(parent->name,"truncate");
+  }
   /* parse the table list */
   parse_list(parent,s_trunc,p);
   return 1;

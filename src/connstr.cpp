@@ -72,6 +72,39 @@ namespace LEX_GLOBAL {
     buf[ln] = '\0';
     return sp ;
   }
+
+#if 1
+  uint16_t prev_token(std::string &str,
+    uint16_t pos, char *buf, int length) 
+  {
+    int ln = 0;
+    uint16_t sp = pos, np = 0, p;
+    char *pstr; 
+
+    /* eliminate possible spaces */
+    while (sp>0 && isspace(str[sp])) sp-- ;
+    np = sp ;
+    /* find begining of type token */ 
+    while (np>0 && str[np]!='[' && str[np]!=']' && 
+      str[np]!='<' && str[np]!='>' && 
+      str[np]!='(' && str[np]!=')' && 
+      str[np]!=',' && str[np]!=':' &&
+      str[np]!='.' && str[np]!='=' &&
+      str[np]!='+' && str[np]!='-' && 
+      str[np]!='\'' && str[np]!='*' &&  
+      str[np]!='/' && 
+      !isspace(str[np])) 
+      np -- ; 
+    /* copy the token */
+    p    = !np?np:!(sp-np)?np:(np+1);
+    ln   = !np?(sp+1):!(sp-np)?1:(sp-np);
+    pstr = (char*)str.substr(p,ln).c_str() ;
+    ln   = strlen(pstr);
+    strncpy(buf,pstr,ln>length?length:ln);
+    buf[ln]='\0';
+    return p ;
+  }
+#endif
 } ;
 
 /* 
@@ -222,39 +255,6 @@ int tns_parser::do_recurse_parse(FILE *file)
   } /* while loop */
   return 1;
 }
-
-#if 0
-uint16_t tns_parser::prev_token(std::string &str,
-  uint16_t pos, char *buf, int length) 
-{
-  int ln = 0;
-  uint16_t sp = pos, np = 0, p;
-  char *pstr; 
-
-  /* eliminate possible spaces */
-  while (sp>0 && isspace(str[sp])) sp-- ;
-  np = sp ;
-  /* find begining of type token */ 
-  while (np>0 && str[np]!='[' && str[np]!=']' && 
-    str[np]!='<' && str[np]!='>' && 
-    str[np]!='(' && str[np]!=')' && 
-    str[np]!=',' && str[np]!=':' &&
-    str[np]!='.' && str[np]!='=' &&
-    str[np]!='+' && str[np]!='-' && 
-    str[np]!='\'' && str[np]!='*' &&  
-    str[np]!='/' && 
-    !isspace(str[np])) 
-    np -- ; 
-  /* copy the token */
-  p    = !np?np:!(sp-np)?np:(np+1);
-  ln   = !np?(sp+1):!(sp-np)?1:(sp-np);
-  pstr = (char*)str.substr(p,ln).c_str() ;
-  ln   = strlen(pstr);
-  strncpy(buf,pstr,ln>length?length:ln);
-  buf[ln]='\0';
-  return p ;
-}
-#endif
 
 int tns_parser::next_token(FILE *file, char buf[], int len)
 {

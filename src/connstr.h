@@ -23,6 +23,8 @@ namespace LEX_GLOBAL {
 
   extern uint16_t next_token(std::string &str,uint16_t pos, 
     char *buf, int length=TKNLEN) ;
+  extern uint16_t prev_token(std::string &str,
+    uint16_t pos, char *buf, int length=TKNLEN) ;
 } ;
 
 using namespace LEX_GLOBAL;
