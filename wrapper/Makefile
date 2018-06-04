@@ -57,8 +57,9 @@ $(JNI_OBJ):%:%.java
 	#
 	# generating jni objects
 	#
-	javah -cp java -o $(JNI_HEADER) -jni $(notdir $@)
 	javac $<
+	javah  -o $(JNI_HEADER) -jni $(notdir $@)
+	# javah -cp java -o $(JNI_HEADER) -jni $(notdir $@)
 
 .PHONY: clean
 clean:
